@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+h4 {
+    padding: 0;
+    margin: 0;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+    width: 40%;
+}
+
+.form-title{
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.employee-form {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 15px 30px 15px;
+    background-color: #e2e2e2;
+}
+
+.employee-form__input {
+    height: 25px;
+    margin: 5px 0 10px 0;
+    font-size: 20px;
+}
+
+.employee-form__submit-btn {
+    margin-top: 4px;
+    height: 40px;
+    border: none;
+    background-color: #44b758;
+    font-size: 16px;
+}
+
+.list-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+    width: 60%;
+}
+
+.list-title {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 15px 0 15px;
+    background-color: #e2e2e2;
+}
+
+.list__item {
+    position: relative;
+    padding: 10px;
+    margin-bottom: 30px;
+    background-color: #bdbdbd;
+}
+
+.list-item__position {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.list-item__email-tel {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.list-item__btn {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.list-item__btn--edit {
+    top: 10px;
+    right: 40px;
+    background-color: #879cfe;
+}
+
+.list-item__btn--delete{
+    top: 10px;
+    right: 10px;
+    background-color: #ff3f3e;
+}
+
+
