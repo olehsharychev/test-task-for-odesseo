@@ -41,6 +41,7 @@ div {
     display: flex;
     flex-direction: column;
     padding: 30px 15px 30px 15px;
+    min-height: 305px;
     background-color: #e2e2e2;
 }
 
@@ -63,6 +64,7 @@ div {
     border: none;
     background-color: #44b758;
     font-size: 16px;
+    cursor: pointer;
 }
 
 .list-wrapper {
@@ -81,7 +83,7 @@ div {
     display: flex;
     flex-direction: column;
     padding: 30px 15px 0 15px;
-    min-height: 360px;
+    min-height: 365px;
     background-color: #e2e2e2;
 }
 
