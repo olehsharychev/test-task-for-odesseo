@@ -5,11 +5,10 @@ let surnameName = document.getElementById("surname-name");
 let position = document.getElementById("position");
 let email = document.getElementById("email");
 let tel = document.getElementById("tel");
-let editBtns = document.getElementsByClassName("list-item__btn--edit");
-let deleteBtns = document.getElementsByClassName("list-item__btn--delete");
 let list = document.querySelector(".list");
+let mode = 0; // 0 - create new record, 1 - edit existing record
 
-if(localStorage.length > 0) {
+if (localStorage.length > 0) {
     arrEmployees = JSON.parse(localStorage.employeesStr);
 }
 
@@ -17,7 +16,7 @@ function renderList() {
     let htmlContent = "";
     let i = 0;
     arrEmployees.forEach(function (item) {
-         htmlContent += `
+        htmlContent += `
             <div id="${i}" class="list__item list-item">
                 <h4 class="list-item__surname-name">${item.surnameName}</h4>
                 <p class="list-item__position">${item.position}</p>
@@ -29,8 +28,11 @@ function renderList() {
         i++;
     });
     list.innerHTML = htmlContent;
+
+    let editBtns = document.getElementsByClassName("list-item__btn--edit");
+    let deleteBtns = document.getElementsByClassName("list-item__btn--delete");
     for (let i = 0; i < editBtns.length; i++) {
-        editBtns[i].addEventListener("click", editRecord);
+        editBtns[i].addEventListener("click", fillForm);
         deleteBtns[i].addEventListener("click", deleteRecord);
     }
 }
@@ -48,11 +50,9 @@ function saveRecords() {
         localStorage.setItem("employeesStr", recordsStr);
     }
 }
-    
+
 function addRecord(record) {
     arrEmployees.push(record);
-    renderList();
-    clearForm();
 }
 
 function deleteRecord() {
@@ -61,9 +61,23 @@ function deleteRecord() {
     renderList();
 }
 
-function editRecord() {
-    console.log(this.parentNode.id);
-    console.log("edit");
+function fillForm() {
+    mode = 1;
+    let itemId = this.parentNode.id;
+    localStorage.setItem("editingId", itemId);
+    surnameName.value = arrEmployees[itemId].surnameName;
+    position.value = arrEmployees[itemId].position;
+    email.value = arrEmployees[itemId].email;
+    tel.value = arrEmployees[itemId].tel;
+}
+
+function saveChanges() {
+    let recordId = localStorage.getItem("editingId");
+    arrEmployees[recordId].surnameName = surnameName.value;
+    arrEmployees[recordId].position = position.value;
+    arrEmployees[recordId].email = email.value;
+    arrEmployees[recordId].tel = tel.value;
+    mode = 0;
 }
 
 function checkValidity() {
@@ -78,24 +92,24 @@ function checkValidity() {
     telWrong.style.display = "none";
 
     const surnameNameRegExp = RegExp("(^[A-Za-z]{1,} [A-Za-z]{1,}$)|(^[А-Яа-я]{1,} [А-Яа-я]{1,}$)");
-    if (!surnameNameRegExp.test(surnameName.value)){
+    if (!surnameNameRegExp.test(surnameName.value)) {
         surnameNameWrong.style.display = "block";
         succeed = 0;
     }
 
-    if (position.value.length < 5){
+    if (position.value.length < 5) {
         positionWrong.style.display = "block";
         succeed = 0;
     }
 
     const emailRegExp = RegExp("^(?!.*@.*@.*$)(?!.*@.*\\-\\-.*\\..*$)(?!.*@.*\\-\\..*$)(?!.*@.*\\-$)(.*@.+(\\..{1,})?)$");
-    if(!emailRegExp.test(email.value)){
+    if (!emailRegExp.test(email.value)) {
         emailWrong.style.display = "block";
         succeed = 0;
     }
 
-    const telRegExp = RegExp("(^[0-9]{10}$)|(^[0-9]{11}$)|(^\\+[0-9]{12}$)");
-    if (!telRegExp.test(tel.value)){
+    const telRegExp = RegExp("(^0[0-9]{9}$)|(^80[0-9]{9}$)|(^\\+380[0-9]{9}$)");
+    if (!telRegExp.test(tel.value)) {
         telWrong.style.display = "block";
         succeed = 0;
     }
@@ -106,15 +120,25 @@ renderList();
 
 employeeForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (checkValidity()){
-        let record = {
-            surnameName : surnameName.value,
-            position : position.value,
-            email : email.value,
-            tel : tel.value
-        };
-        addRecord(record);
+    if (checkValidity()) {
+        if (mode === 0) { // add new record
+            let record = {
+                surnameName: surnameName.value,
+                position: position.value,
+                email: email.value,
+                tel: tel.value
+            };
+            addRecord(record);
+            clearForm();
+            renderList();
+        }
+        if (mode === 1) { // edit existing record
+            saveChanges();
+            clearForm();
+            renderList();
+        }
     }
+
 });
 
 window.onbeforeunload = function () {
