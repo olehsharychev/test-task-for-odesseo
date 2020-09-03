@@ -33,7 +33,13 @@ function renderList() {
     let deleteBtns = document.getElementsByClassName("list-item__btn--delete");
     for (let i = 0; i < editBtns.length; i++) {
         editBtns[i].addEventListener("click", fillForm);
-        deleteBtns[i].addEventListener("click", deleteRecord);
+        deleteBtns[i].addEventListener("click", function () {
+            let itemId = this.parentNode.id;
+            // deleting records blocked while editing
+            if (mode === 0) {
+                deleteRecord(itemId);
+            }
+        });
     }
 }
 
@@ -55,8 +61,7 @@ function addRecord(record) {
     arrEmployees.push(record);
 }
 
-function deleteRecord() {
-    let itemId = this.parentNode.id;
+function deleteRecord(itemId) {
     arrEmployees.splice(itemId, 1);
     renderList();
 }
@@ -141,6 +146,7 @@ employeeForm.addEventListener("submit", function (e) {
 
 });
 
+// save arrEmployees on closing or updating window
 window.onbeforeunload = function () {
     saveRecords();
 };
