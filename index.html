@@ -16,19 +16,23 @@
             Форма создания / редактирования сотрудника
         </h4>
 
-        <form action="" class="employee-form">
+        <form class="employee-form" novalidate>
 
             <label for="surname-name">Фамилия Имя</label>
             <input type="text" class="employee-form__input" id="surname-name">
+            <p id="surname-name-wrong" class="employee-form__error">Фамилия и имя введены неверно</p>
 
             <label for="position">Должность</label>
             <input type="text" class="employee-form__input" id="position">
+            <p id="position-wrong" class="employee-form__error">Должность введена неверно</p>
 
             <label for="email">Email</label>
             <input type="email" class="employee-form__input" id="email">
+            <p id="email-wrong" class="employee-form__error">Email введен неверно</p>
 
             <label for="tel">Телефон</label>
             <input type="tel" class="employee-form__input" id="tel">
+            <p id="tel-wrong" class="employee-form__error">Телефон введен неверно</p>
 
             <button type="submit" class="employee-form__submit-btn">Сохранить</button>
 
